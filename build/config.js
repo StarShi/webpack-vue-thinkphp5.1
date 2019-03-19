@@ -1,15 +1,15 @@
 const path = require("path");
 module.exports = {
 	dev:{
-		mode:'development',
-		assetsPublicPath: '/',
-		assetsRoot:path.join(__dirname, "../public"),
-		htmlOutPath:'../public/',
-		assetsSubDirectory:'../static',
-		staticPath:"../public/static"
+		mode:'development',//服务器环境
+		assetsPublicPath: '/',//虚拟打包资源文件映射路径
+		assetsRoot:path.join(__dirname, "../public"),//虚拟生成路径
+		htmlOutPath:'../public/',//虚拟打包页面路径
+		assetsSubDirectory:'../static',//虚拟打包静态资源文件路径
+		staticPath:"../public/static"//虚拟打包静态资源复制路径
 	},
 	build:{
-		mode:'production',
+		mode:'production',//生产环境
 		assetsPublicPath: '/web',//打包资源文件映射路径
 		assetsRoot:path.join(__dirname, "../tp5/public/web"),//打包的js文件输出路径
 		htmlOutPath:'../tp5/application/index/view/',//打包的html文件输出路径

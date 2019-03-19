@@ -6,7 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const packConfig = require('./config');
 let workConfig = process.env.NODE_ENV === 'development' ? packConfig.dev : packConfig.build;
-console.log('base:',process.env.NODE_ENV)
 
 function resolve (dir) {//处理别名路径
 	return path.join(__dirname, '..', dir);

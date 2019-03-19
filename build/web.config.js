@@ -24,8 +24,7 @@ for(let item of files){
 	let name = patternName.exec(item)[1];
 	url = path.join(__dirname, '..'+url);
 	newHtmls.push(new HtmlWebpackPlugin({
-		filename:path.join(__dirname, outPath+'/'+name+'.html'),
-		// filename:name+'.html',
+		filename:path.join(__dirname, outPath+'/'+name+'.html'),//页面打包路径地址
 		template:'index.html',
 		inject:true,//默认true插入body,head | body | false 
 		title:title[name],
@@ -36,7 +35,6 @@ for(let item of files){
 		chunks:['common',name],
 		//common为提取出来的公共代码，如在多页面里均引入的jquery一样，提取出来减少打包体积
 	}));
-	console.log(path.join(__dirname, outPath+'/'+name+'.html'))
 }
 // console.log(newHtmls)
 module.exports = newHtmls;
