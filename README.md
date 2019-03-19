@@ -1,2 +1,2 @@
 # vue-webpack-thinkphp5.1
-vue+webpack+thinkphp5的开发环境配置
+webpack+vue+thinkphp5的开发环境配置
