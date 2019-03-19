@@ -1,0 +1,101 @@
+//导入文件
+const path = require('path');
+const entry = require('./entry.config');
+const htmls = require('./web.config');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const packConfig = require('./config');
+let workConfig = process.env.NODE_ENV === 'development' ? packConfig.dev : packConfig.build;
+console.log('base:',process.env.NODE_ENV)
+
+function resolve (dir) {//处理别名路径
+	return path.join(__dirname, '..', dir);
+}
+let config = {
+	mode:workConfig.mode,	
+	entry:entry,	
+	output: {//出口文件
+		filename: "[name]/js/[name]-[hash].js",//打包后输出文件的文件名
+		path: workConfig.assetsRoot,//打包后的文件存放的地方,__dirname指当前根目录
+		publicPath:workConfig.assetsPublicPath,
+	},
+	resolve: {
+	    extensions: ['.js','.json','.css','.scss','.vue'],//引用可省略扩展
+	    alias: { //别名
+	        'vue$': 'vue/dist/vue.esm.js',
+	        '@': resolve('src'),
+	    }
+	},
+	module: {
+	    rules: [
+			{
+				test: /\.vue$/,//处理vue文件
+				use: {
+					loader:'vue-loader',
+					options: {
+						loaders: {//处理vue文件中不同类型的样式
+							css:['css-loader', 'postcss-loader'],
+							scss: ['css-loader', 'postcss-loader','sass-loader']
+						}
+					}
+				},
+
+			},
+			{
+				test: /\.js$/,//转换js文件中的es6语法
+				use: 'babel-loader',
+				include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+			},
+			{
+	            test:/\.(png|jpg|gif|jpeg|svg)(\?.*)?$/,//打包图片
+	            use:[{
+	                    loader: "url-loader",
+	                    options: {
+	                        name: "[name].[hash].[ext]",//文件名称
+	                        limit: 10000, //限制大小，超过则默认使用file-loader处理
+	                        outputPath:workConfig.assetsSubDirectory+'/images' //输出路径
+	                    }
+	            }],
+	            include:[resolve('src')]
+	        },
+			{
+				test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,//打包音视频文件
+	            use:[{
+	                    loader: "url-loader",
+	                    options: {
+	                        name: "[name].[hash].[ext]",//文件名称
+	                        limit: 10000, //限制大小，超过则默认使用file-loader处理
+	                        outputPath:workConfig.assetsSubDirectory+'/media'//输出路径
+	                    }
+	            }],
+	      		include:[resolve('src')]
+			},
+			{
+				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,//打包字体文件
+				use:[{
+	                    loader: "url-loader",
+	                    options: {
+	                        name: "[name].[hash].[ext]",//文件名称
+	                        limit: 10000, //限制大小，超过则默认使用file-loader处理
+	                        outputPath:workConfig.assetsSubDirectory+'/fonts'//输出路径
+	                    }
+	            }],
+	            include:[resolve('src')]
+			}
+	    ]
+	},
+	plugins:[
+		new CopyWebpackPlugin([//复制静态资源
+			{
+				from: path.resolve(__dirname, '../static'),
+				to: path.join(__dirname,workConfig.staticPath),
+				ignore: ['.*'],
+			}
+		]),
+		new VueLoaderPlugin()
+	]
+};
+for(let item of htmls){
+	config.plugins.push(item);
+}
+module.exports = config;
