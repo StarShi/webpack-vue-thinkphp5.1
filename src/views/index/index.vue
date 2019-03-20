@@ -2,6 +2,7 @@
   <div id="app" class='containera'>
       <div style="width:100px;height:100px;background-color:black;">
           <img src="/static/images/article_bg.png" width="100%" height="100%">
+          <img :src="require('@/assets/common/images/hire-us.png')" width="100%" height="100%">
       </div>
   </div>
 </template>

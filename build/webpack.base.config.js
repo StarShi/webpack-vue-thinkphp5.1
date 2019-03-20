@@ -52,6 +52,7 @@ let config = {
 	                    options: {
 	                        name: "[name].[hash].[ext]",//文件名称
 	                        limit: 10000, //限制大小，超过则默认使用file-loader处理
+             				publicPath:workConfig.staticInlinePath+'/images',
 	                        outputPath:workConfig.assetsSubDirectory+'/images' //输出路径
 	                    }
 	            }],
@@ -64,6 +65,7 @@ let config = {
 	                    options: {
 	                        name: "[name].[hash].[ext]",//文件名称
 	                        limit: 10000, //限制大小，超过则默认使用file-loader处理
+	                        publicPath:workConfig.staticInlinePath+'/media',
 	                        outputPath:workConfig.assetsSubDirectory+'/media'//输出路径
 	                    }
 	            }],
@@ -76,6 +78,7 @@ let config = {
 	                    options: {
 	                        name: "[name].[hash].[ext]",//文件名称
 	                        limit: 10000, //限制大小，超过则默认使用file-loader处理
+	                        publicPath:workConfig.staticInlinePath+'/fonts',
 	                        outputPath:workConfig.assetsSubDirectory+'/fonts'//输出路径
 	                    }
 	            }],
